@@ -26,7 +26,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean
 
 # Install Oh-My-Zsh for a better Zsh experience
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Install nvm, node, npm, and yarn
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash \
