@@ -36,6 +36,11 @@ RUN echo 'export NVM_DIR="/usr/local/nvm"' >> /home/coder/.zshrc \
     && echo '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"' >> /home/coder/.zshrc \
     && echo 'nvm use default' >> /home/coder/.zshrc
 
+RUN curl https://pyenv.run | bash
+
+RUN echo "export PYENV_ROOT=\"$HOME/.pyenv\"; [[ -d \$PYENV_ROOT/bin ]] && export PATH=\"\$PYENV_ROOT/bin:\$PATH\"; eval \"(pyenv init -)\"" >> ~/.zshrc
+RUN eval "$(pyenv virtualenv-init -)"
+
 # Set Zsh as default shell
 RUN chsh -s /bin/zsh
 
