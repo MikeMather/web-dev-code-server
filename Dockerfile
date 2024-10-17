@@ -63,6 +63,7 @@ RUN code-server --install-extension Catppuccin.catppuccin-vsc
 RUN code-server --install-extension esbenp.prettier-vscode
 RUN code-server --install-extension dbaeumer.vscode-eslint
 RUN code-server --install-extension ms-python.python
+RUN code-server --install-extension Tobermory.es6-string-html
 RUN code-server --install-extension ./GH-Copilot.vsix
 
 # Expose default code-server port
