@@ -17,9 +17,9 @@ RUN mkdir -p $NVM_DIR && chown -R coder:coder $NVM_DIR
 
 RUN apt-get update && apt-get install -y \
     curl wget zsh git build-essential python3 python3-pip python3-venv \
-    python3-dev bzip2 libreadline6 libreadline6-dev openssl libssl-dev lzma \
+    python3-dev bzip2 openssl libssl-dev lzma \
     gcc libffi-dev libc-dev libsqlite3-dev zlib1g-dev libbz2-dev \ 
-    libreadline-dev libncurses5-dev libncursesw5-dev xz-utils tk-dev liblzma-dev \
+    libncurses5-dev libncursesw5-dev xz-utils tk-dev liblzma-dev \
     sqlite3 postgresql-client htop \
     docker.io docker-compose \
     make build-essential libssl-dev zlib1g-dev \
@@ -54,6 +54,16 @@ RUN chsh -s /bin/zsh
 
 # Switch back to the default non-root user (coder)
 USER coder
+
+COPY ./ /usr/app
+WORKDIR /usr/app
+
+# VS Code extensions
+RUN code-server --install-extension Catppuccin.catppuccin-vsc
+RUN code-server --install-extension esbenp.prettier-vscode
+RUN code-server --install-extension dbaeumer.vscode-eslint
+RUN code-server --install-extension ms-python.python
+RUN code-server --install-extension ./GH-Copilot.vsix
 
 # Expose default code-server port
 EXPOSE 8080
