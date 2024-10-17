@@ -14,10 +14,15 @@ ENV NODE_VERSION=20
 RUN mkdir -p $NVM_DIR && chown -R coder:coder $NVM_DIR
 
 # Install essential packages
+
 RUN apt-get update && apt-get install -y \
     curl wget zsh git build-essential python3 python3-pip python3-venv \
+    python3-dev bzip2 libreadline6 libreadline6-dev openssl libssl-dev lzma \
+    gcc libffi-dev libc-dev libsqlite3-dev zlib1g-dev libbz2-dev \ 
+    libreadline-dev libncurses5-dev libncursesw5-dev xz-utils tk-dev liblzma-dev \
     sqlite3 postgresql-client htop \
     docker.io docker-compose \
+    make build-essential libssl-dev zlib1g-dev \
     && apt-get clean
 
 # Install Oh-My-Zsh for a better Zsh experience
@@ -30,6 +35,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | b
     && nvm use $NODE_VERSION \
     && nvm alias default $NODE_VERSION \
     && npm install -g npm yarn webpack parcel-bundler vite eslint prettier
+    
 
 # Add nvm initialization to Zsh profile
 RUN echo 'export NVM_DIR="/usr/local/nvm"' >> /home/coder/.zshrc \
@@ -38,8 +44,10 @@ RUN echo 'export NVM_DIR="/usr/local/nvm"' >> /home/coder/.zshrc \
 
 RUN curl https://pyenv.run | bash
 
-RUN echo "export PYENV_ROOT=\"$HOME/.pyenv\"; [[ -d \$PYENV_ROOT/bin ]] && export PATH=\"\$PYENV_ROOT/bin:\$PATH\"; eval \"(pyenv init -)\"" >> ~/.zshrc
-RUN eval "$(pyenv virtualenv-init -)"
+RUN echo 'export PATH="$HOME/.pyenv/bin:$PATH"' >> ~/.zshrc
+RUN echo 'eval "$(pyenv init -)"' >> ~/.zshrc
+RUN echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
+
 
 # Set Zsh as default shell
 RUN chsh -s /bin/zsh
